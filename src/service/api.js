@@ -18,5 +18,5 @@ export async function getDataServer (searchQuery, pagePagination) {
   return await axios
     .get()
     .then(response => response.data.hits)
-    .catch(error => console.log('error: ', error.response));
+    .catch(error => console.log('error: ', error));
 };
