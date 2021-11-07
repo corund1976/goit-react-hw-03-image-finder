@@ -13,23 +13,23 @@ class Modal extends Component {
 
   handleKeyEsc = e => {
     if (e.keyCode === 27) {
-      this.props.toggleModalStatus();
+      this.props.onToggleModalStatus();
     }
   };
 
   handleClickBackdrop = e => {
     if (e.currentTarget === e.target) {
-      this.props.toggleModalStatus();
+      this.props.onToggleModalStatus();
     }
   };
 
   render() {
-    const {modalImageURL, modalImageTags} = this.props;
+    const { largeImageURL, tags } = this.props.modalImage;
 
     return (
       <div className={s.Overlay} onClick={this.handleClickBackdrop}>
         <div className={s.Modal}>
-          <img src={modalImageURL} alt={modalImageTags}/>
+          <img src={largeImageURL} alt={tags}/>
         </div>
       </div>
     );
@@ -39,7 +39,9 @@ class Modal extends Component {
 export default Modal;
 
 Modal.propTypes = {
-  toggleModalStatus: PropTypes.func.isRequired,
-  modalImageURL: PropTypes.string.isRequired,
-  modalImageTags: PropTypes.string.isRequired
+  onToggleModalStatus: PropTypes.func.isRequired,
+  modalImage: PropTypes.shape({
+    largeImageURL: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired
+  }).isRequired
 };

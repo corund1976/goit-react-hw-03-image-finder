@@ -15,14 +15,13 @@ class App extends Component {
 
     images: [],
 
-    paginationPage: 1,
+    pagination: 1,
     error: null,
 
     isLoading: false,
 
+    modalImage: {},
     modalIsHidden: true,
-    modalImageURL: '',
-    modalImageTags: ''
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -42,10 +41,9 @@ class App extends Component {
   // Получение данных с сервера
   loadImages = page => {
     const { images, search } = this.state;
-
     this.setState({
-      paginationPage: page,
-      error: '',
+      pagination: page,
+      error: null,
       isLoading: true
     });
     // Запрос данных с сервера
@@ -71,18 +69,17 @@ class App extends Component {
   handleToggleModalStatus = () => {
     this.setState(({ modalIsHidden }) => ({ modalIsHidden: !modalIsHidden }));
   };
-  handleShowModalClick = (largeImageURL, tags) => {
-    this.setState({ modalImageURL: largeImageURL });
-    this.setState({ modalImageTags: tags });
+  handleShowModalClick = ({ modalImage }) => {
+    this.setState({ modalImage: { ...modalImage } });
     this.handleToggleModalStatus();
   };
-  // Кноппка LoadMore...
+  // Кнопка LoadMore...
   handleLoadMoreClick = () => {
-    this.loadImages(this.state.paginationPage+1);
+    this.loadImages(this.state.pagination + 1);
   };
 
   render() {
-    const { images, isLoading, error, modalImageURL, modalImageTags, modalIsHidden } = this.state;
+    const { images, isLoading, error, modalImage, modalIsHidden } = this.state;
     const { handleFormSubmit, handleShowModalClick, handleToggleModalStatus, handleLoadMoreClick } = this;
  
     return (
@@ -107,9 +104,8 @@ class App extends Component {
 
           {!modalIsHidden && 
         <Modal
-          toggleModalStatus={handleToggleModalStatus}
-          modalImageURL={modalImageURL}
-          modalImageTags={modalImageTags} />}
+          onToggleModalStatus={handleToggleModalStatus}
+          modalImage={modalImage} />}
         
       </Container>
     );

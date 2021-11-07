@@ -5,13 +5,11 @@ import s from './ImageGallery.module.css';
 function ImageGallery({images, onShowModal}) {
   return (
     <ul className={s.ImageGallery}>
-      {images.map(({ id, webformatURL, largeImageURL, tags }) => {
+      {images.map(({ id, ...image }) => {
         return (
           <ImageGalleryItem
-            key={id} // id - уникальный идентификатор
-            webformatURL={webformatURL} // webformatURL - ссылка на маленькое изображение для списка карточек
-            largeImageURL={largeImageURL} // largeImageURL - ссылка на большое изображение для модального окна
-            tags={tags} // tags - поисковые тэги для изображения на Pixabay
+            key={id}
+            image={image}
             onShowModal={onShowModal}>
           </ImageGalleryItem>
         );
@@ -26,9 +24,8 @@ ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      webformatURL: PropTypes.string.isRequired,
-      largeImageURL: PropTypes.string.isRequired,
-      tags: PropTypes.string.isRequired,
     })).isRequired,
   onShowModal: PropTypes.func.isRequired
 };
+
+// id - уникальный идентификатор от Pixabay
