@@ -16,7 +16,7 @@ class App extends Component {
     images: [],
 
     paginationPage: 1,
-    error: '',
+    error: null,
 
     isLoading: false,
 
@@ -52,7 +52,9 @@ class App extends Component {
     getDataServer(search, page)
       .then(( newImages ) => {
         if (newImages.length===0) {
-          this.setState({ error: `There is no pictures by ${search} name, please try another request` });
+          return Promise.reject(
+           new Error(`There is no pictures by ${search} name, please try another request`));
+          // this.setState({ error: `There is no pictures by ${search} name, please try another request` });
         } else {
           this.setState({ images: [...(images || []), ...newImages] });
         }
@@ -90,7 +92,7 @@ class App extends Component {
           onSubmit={handleFormSubmit} />
         
           {error &&
-        <h1>{error}</h1>}
+        <h1>{error.message}</h1>}
 
         <ImageGallery
           images={images}
