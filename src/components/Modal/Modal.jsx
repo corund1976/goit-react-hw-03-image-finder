@@ -12,7 +12,7 @@ class Modal extends Component {
   }
 
   handleKeyEsc = e => {
-    if (e.keyCode === 27) {
+    if (e.code === 'Escape') {           //e.keyCode === 27
       this.props.onToggleModalStatus();
     }
   };

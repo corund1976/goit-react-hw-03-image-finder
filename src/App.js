@@ -31,7 +31,7 @@ class App extends Component {
       });
     }
 
-    if (prevState.images !== this.state.images) {
+    if (this.state.pagination > 1 & prevState.images !== this.state.images) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth'
